@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org" layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Courses</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+
+<div layout:fragment="content1">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                Hello, <span class="text-success" th:text="${firstName} + ' ' + ${lastName}"></span> Current Course Subscriptions:
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr class="text-center">
+                        <th>Course ID</th>
+                        <th>Course Name</th>
+                        <th>Course Durartion</th>
+                        <th>Course Description</th>
+                        <th>Instructor</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="text-center" th:each="course:${listCourses}">
+                        <td th:text="${course.getCourseId()}"></td>
+                        <td th:text="${course.getCourseName()}"></td>
+                        <td th:text="${course.getCourseDuration()}"></td>
+                        <td th:text="${course.getCourseDescription()}"></td>
+                        <td th:text="${course.getInstructor().getFirstName()} + ' ' + ${course.getInstructor().getLastName()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                Enrolled in new Courses:
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr class="text-center">
+                        <th>Course ID</th>
+                        <th>Course Name</th>
+                        <th>Course Durartion</th>
+                        <th>Course Description</th>
+                        <th>Instructor</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="text-center" th:each="course:${otherCourses}">
+                        <td th:text="${course.getCourseId()}"></td>
+                        <td th:text="${course.getCourseName()}"></td>
+                        <td th:text="${course.getCourseDuration()}"></td>
+                        <td th:text="${course.getCourseDescription()}"></td>
+                        <td th:text="${course.getInstructor().getFirstName()} + ' ' + ${course.getInstructor().getLastName()}"></td>
+                        <td>
+                            <a class="btn btn-info"
+                               th:href="@{/courses/enrollStudent(courseId=${course.getCourseId()})}">
+                                Enrolle In
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

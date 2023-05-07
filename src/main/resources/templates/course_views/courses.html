@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Courses</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+
+</head>
+<body>
+
+<div layout:fragment="content1">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header"> List of Courses</div>
+                    <div class="card-body">
+                        <form method="get" th:action="@{list}">
+                            <label>Course</label>
+                            <input type="text" name="keyword" th:value="${keyword}">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form>
+
+                        <table class="table">
+                            <thead>
+                            <tr class="text-center">
+                                <th>Course ID</th>
+                                <th>Course Name</th>
+                                <th>Course Durartion</th>
+                                <th>Course Description</th>
+                                <th>Instructor</th>
+                                <th>Number of Participants</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="text-center" th:each="course:${listCourses}">
+                                <td th:text="${course.getCourseId()}"></td>
+                                <td th:text="${course.getCourseName()}"></td>
+                                <td th:text="${course.getCourseDuration()}"></td>
+                                <td th:text="${course.getCourseDescription()}"></td>
+                                <td th:text="${course.getInstructor().getFirstName()} + ' ' + ${course.getInstructor().getLastName()}"></td>
+                                <td th:text="${course.getStudents().size()}"></td>
+                                <td>
+                                    <a href=""></a>
+                                </td>
+                                <td>
+                                    <a class="btn bg-danger"
+                                       th:href="@{/courses/delete(courseId=${course.getCourseId()}, keyword=${keyword})}"
+                                       onclick="return confirm('Are you sure')">
+                                        Delete
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn bg-success"
+                                       th:href="@{/courses/update(courseId=${course.getCourseId()})}">
+                                        Update
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

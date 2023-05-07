@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Student</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+
+<div layout:fragment="content1">
+    <div class="col-md-6 offset-3 mt-3">
+        <form class="form-control" method="post" th:action="@{/student/edit}" th:object="${student}">
+            <div class="mb-3 mt-3">
+                <label class="form-label">Student ID</label>
+                <input class="form-control" type="number" name="studentId" id="strudentId"
+                       th:value="${student.getStudentId()}"
+                       readonly="readonly">
+            </div>
+            <div class="mb-3 mt-3">
+                <label class="form-label">Student First Name</label>
+                <input class="form-control" type="text" name="firstName" id="firstName"
+                       th:value="${student.getFirstName()}">
+            </div>
+            <div class="mb-3 mt-3">
+                <label class="form-label">Student Last Name</label>
+                <input class="form-control" type="text" name="lastName" id="lastName"
+                       th:value="${student.getLastName()}">
+            </div>
+            <div class="mb-3 mt-3">
+                <label class="form-label">Student Level</label>
+                <input class="form-control" type="text" name="level" id="level" th:value="${student.getLevel()}">
+            </div>
+
+            <div class="mb-3 mt-3" th:each="course : ${student.getCourses()}">
+                <input class="form-control" hidden="hidden"
+                       name="courses" th:value="${student.courses[courseStat.index].getCourseId()}">
+            </div>
+
+            <div class="mb-3 mt-3" hidden>
+                <input class="form-control" name="user" th:field="${student.user}">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update</button>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>

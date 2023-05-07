@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+    <script src="/webjars/bootstrap/5.1.3/js/bootstrap.bundle.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" th:href="@{/courses/index}">Home</a>
+        <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Courses</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/courses/list}" sec:authorize="hasAuthority('Admin')">Search</a></li>
+                        <li><a class="dropdown-item" th:href="@{/courses/list/student}" sec:authorize="hasAuthority('Student')">Student Courses</a></li>
+                        <li><a class="dropdown-item" th:href="@{/courses/list/instructor}" sec:authorize="hasAuthority('Instructor')">Instructor Courses</a></li>
+                        <li><a class="dropdown-item" th:href="@{/courses/create}" sec:authorize="hasAnyAuthority('Admin','Instructor')">New Course</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated() && hasAuthority('Admin')">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Instructors</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/instructor/list}">Search</a></li>
+                        <li><a class="dropdown-item" th:href="@{/instructor/create}">New Instructor</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated() && hasAuthority('Admin')">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Students</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/student/list}">Search</a></li>
+                        <li><a class="dropdown-item" th:href="@{/student/create}">New Student</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <span sec:authentication="name"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" sec:authorize="hasAuthority('Instructor')" th:href="@{/instructor/update}">
+                                Update Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" sec:authorize="hasAuthority('Student')" th:href="@{/student/update}">
+                                Update Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item" sec:authorize="isAnonymous()">
+                    <a class="nav-link" th:href="@{/login}">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<section layout:fragment="content1">
+
+</section>
+</body>
+</html>
